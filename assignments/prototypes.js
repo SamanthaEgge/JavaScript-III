@@ -39,6 +39,8 @@ GameObject.prototype.destroy = function() {
 function CharacterStats (charAttributes) {
   GameObject.call(this, charAttributes);
   this.healthPoints = charAttributes.healthPoints;
+  this.speedStat = charAttributes.speedStat;
+  this.damageStat = charAttributes.damageStat;
 }
 CharacterStats.prototype = Object.create(GameObject.prototype);
 CharacterStats.prototype.takeDamage = function() {
@@ -75,16 +77,70 @@ Humanoid.prototype.greet = function () {
 //------Villain Prototype------
 function Villain (villainAttr) {
   Humanoid.call(this, villainAttr);
-  this.
+  this.evilLaugh = villainAttr.evilLaugh;
 }
 
-function Hero (heroAtrr) {
+function Hero (heroAttr) {
+  Humanoid.call(this, heroAttr);
+  this.cape = heroAttr.cape;
+}
+
+
+function battle (object1, object2) {
+  while (object1.healthPoints > 0 && object2.healthPoints > 0) {
+    if (object1.speedStat > object2.speedstat) {
+      let damageNumber = Math.floor(Math.random() * (10-1)) + 1;
+      object2.healthPoints = object2.healthPoints - damageNumber;
+      console.log(`${object1.name} hit ${object2.name} for ${damageNumber}. They are now at ${ojbect2.healthPoints}`)
+    }
+    else {
+      let damageNumber = Math.floor(Math.random() * (10-1)) + 1;
+      object1.healthPoints = object1.healthPoints - damageNumber;
+      console.log(`${object2.name} hit ${object1.name} for ${damageNumber}. They are now at ${ojbect1.healthPoints}`)
+    }
+  }
   
+  if (object1.healthPoints <= 0) {
+    object1.destroy();
+  }
+  else {
+    object2.destroy();
+  }
 }
-
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
+  const hero = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 5,
+    name: 'Bruce',
+    team: 'Mage Guild',
+    weapons: [
+      'Staff of Shamalama',
+    ],
+    language: 'Common Tongue',
+  })
+
+  const villian = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 5,
+    name: 'Bruce',
+    team: 'Mage Guild',
+    weapons: [
+      'Staff of Shamalama',
+    ],
+    language: 'Common Tongue',
+  })
 
   const mage = new Humanoid({
     createdAt: new Date(),
@@ -149,7 +205,7 @@ function Hero (heroAtrr) {
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
-  battle(hero, villian);
+//  battle(hero, villian);
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
