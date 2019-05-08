@@ -80,33 +80,49 @@ function Villain (villainAttr) {
   this.evilLaugh = villainAttr.evilLaugh;
 }
 
+Villain.prototype = Object.create(Humanoid.prototype);
+
 function Hero (heroAttr) {
   Humanoid.call(this, heroAttr);
   this.cape = heroAttr.cape;
 }
 
+Hero.prototype = Object.create(Humanoid.prototype);
+
 
 function battle (object1, object2) {
   while (object1.healthPoints > 0 && object2.healthPoints > 0) {
     if (object1.speedStat > object2.speedstat) {
-      let damageNumber = Math.floor(Math.random() * (10-1)) + 1;
-      object2.healthPoints = object2.healthPoints - damageNumber;
-      console.log(`${object1.name} hit ${object2.name} for ${damageNumber}. They are now at ${ojbect2.healthPoints}`)
+      let damageNumber1 = Math.floor(Math.random() * (10-1)) + 1;
+      object2.healthPoints = object2.healthPoints - damageNumber1;
+      console.log(`${object1.name} hit ${object2.name} for ${damageNumber1}. They are now at ${object2.healthPoints}`)
+      let damageNumber2 = Math.floor(Math.random() * (10-1)) + 1;
+      object1.healthPoints = object1.healthPoints - damageNumber2;
+      console.log(`${object2.name} hit ${object1.name} for ${damageNumber2}. They are now at ${object1.healthPoints}`)
     }
     else {
       let damageNumber = Math.floor(Math.random() * (10-1)) + 1;
       object1.healthPoints = object1.healthPoints - damageNumber;
-      console.log(`${object2.name} hit ${object1.name} for ${damageNumber}. They are now at ${ojbect1.healthPoints}`)
+      console.log(`${object2.name} hit ${object1.name} for ${damageNumber}. They are now at ${object1.healthPoints}`)
+      let damageNumber1 = Math.floor(Math.random() * (10-1)) + 1;
+      object2.healthPoints = object2.healthPoints - damageNumber1;
+      console.log(`${object1.name} hit ${object2.name} for ${damageNumber1}. They are now at ${object2.healthPoints}`)
     }
   }
   
   if (object1.healthPoints <= 0) {
-    object1.destroy();
+    console.log(object1.destroy());
   }
   else {
-    object2.destroy();
+    console.log(object2.destroy());
   }
 }
+
+
+////Testing my damage stat
+//let damageNumber = Math.floor(Math.random() * (10-1)) + 1;
+//console.log(`Damage Test # ${damageNumber}`)
+
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
@@ -117,13 +133,15 @@ function battle (object1, object2) {
       width: 1,
       height: 1,
     },
-    healthPoints: 5,
-    name: 'Bruce',
-    team: 'Mage Guild',
+    healthPoints: 50,
+    speedStat: 7,
+    name: 'The Phoenix',
+    team: 'None',
     weapons: [
       'Staff of Shamalama',
     ],
     language: 'Common Tongue',
+    cape: 'No capes'
   })
 
   const villian = new Villain({
@@ -133,13 +151,15 @@ function battle (object1, object2) {
       width: 1,
       height: 1,
     },
-    healthPoints: 5,
+    healthPoints: 50,
+    speedStat: 5,
     name: 'Bruce',
-    team: 'Mage Guild',
+    team: 'Thieves Guild',
     weapons: [
       'Staff of Shamalama',
     ],
     language: 'Common Tongue',
+    evilLaugh: 'Muhahahaha'
   })
 
   const mage = new Humanoid({
@@ -205,7 +225,7 @@ function battle (object1, object2) {
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
-//  battle(hero, villian);
+battle(hero, villian);
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
